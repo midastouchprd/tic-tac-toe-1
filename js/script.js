@@ -58,68 +58,80 @@
 /* Constants */
 
 const winCombos = [
-	// rows
-	[0, 1, 2],
-	[3, 4, 5],
-	[6, 7, 8],
-	// columns
-	[0, 3, 6],
-	[1, 4, 7],
-	[2, 5, 8],
-	// diags
-	[0, 4, 8],
-	[2, 4, 6],
+  // rows
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  // columns
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  // diags
+  [0, 4, 8],
+  [2, 4, 6],
 ];
 
 /* Variables */
 
-let gameBoard;
+let gameState;
 let currentTurn;
 let winner;
-// null = in progress, T = tie, 1 or -1 = which winner
 
-const $gameboard = $("#gameboard");
-const $squares = $(".game-sq");
+const $gameboard = $("#gameboard"); // jquery element for div surronding the board
 
+const $squares = $(".game-sq"); //jquery array of all the squares
+
+// this is probably work as reset, maybe change to startGame?
 function initGame() {
-	gameBoard = [null, null, null, null, null, null, null, null, null];
-	currentTurn = 1;
-	winner = null;
+  //null equals empty square
+  //1 === 'X'
+  //-1 === 'O'
+  gameState = [null, null, null, null, null, null, null, null, null];
+  currentTurn = 1;
+  winner = null;
 }
 
 function renderBoard() {
-	gameBoard.forEach((squareValue, squareIndex) => {
-		let square = $squares.eq(squareIndex);
-		gameMarker(square, squareValue);
-	});
+  gameState.forEach((squareMarker, gameStateIndex) => {
+    console.log("======GAMESTATE FOR EACH LOOP BEGIN======");
+    console.log(squareMarker);
+    console.log(gameStateIndex);
+    let square = $squares.eq(gameStateIndex);
+    console.log("square element being checked: ", square);
+    gameMarker(square, squareMarker);
+    console.log("======GAMESTATE FOR EACH LOOP END======");
+  });
 }
 
-function gameMarker(square, value) {
-	if (value === 1) {
-		square.text("X");
-	} else if (value === -1) {
-		square.text("O");
-	}
+initGame();
+renderBoard();
+
+function gameMarker(squareElem, value) {
+  if (value === 1) {
+    squareElem.text("X");
+  } else if (value === -1) {
+    squareElem.text("O");
+  }
 }
 
-function handleClick() {
-	console.log("be i working?");
-	renderBoard();
-}
+// function handleClick() {
+//   console.log("be i working?");
+//   renderBoard();
+// }
 
 // if any of the win combos add up to either 3 or -3, then the player who's turn it is has won
 // iterate over win combs array. for each nested array, needs to add to 3 or negative 3.
 
-// function checkWinner() {
-// 	winCombos.forEach;
+function checkWinner() {
+  winCombos.forEach;
 
-// 	if (points === 3) {
-// 		winner = 1;
-// 	}
-// 	if (points === -3) {
-// 		winner = -1;
-// 	}
-// }
+  if (points === 3) {
+    winner = 1;
+  }
+  if (points === -3) {
+    winner = -1;
+  }
+}
 
 $gameboard.on("click", ".game-sq", handleClick);
 
