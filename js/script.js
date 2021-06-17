@@ -142,9 +142,13 @@ function handleClick(event) {
 // iterate over win combs array. for each nested array, needs to add to 3 or negative 3.
 
 function checkWinner() {
+  let nullCounter = 0;
   winCombos.forEach((winCond) => {
     let points = 0;
     winCond.forEach((gameStateIndexToCheck) => {
+      if (gameState[gameStateIndexToCheck] === null) {
+        nullCounter++;
+      }
       points += gameState[gameStateIndexToCheck];
     });
     if (points === 3) {
@@ -156,6 +160,13 @@ function checkWinner() {
       $winnerMessage.text("CONGRATS PLAYER O HAS WON!");
     }
   });
+  console.log(nullCounter);
+  if (!nullCounter) {
+    winner = "T";
+    $winnerMessage.text("TIE");
+  }
+
+  // done looping
 }
 
 initGame();
